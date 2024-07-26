@@ -73,9 +73,9 @@ const registerUser = asyncHandler(async (req, res) => {
 
 const loginUser = asyncHandler(async (req, res) => {
     const { aadhar, mobile, password } = await req.body;
-    // console.log(email,username);
+
     if (!aadhar && !mobile) {
-        throw new ApiError(400, "Username or Email is required")
+        throw new ApiError(400, "Aadhar or mobile is required")
     }
 
     const user = await User.findOne({
@@ -228,10 +228,5 @@ export {
     getCurrentUser, 
     passwordChange, 
     refreshAccessToken,
-    updateAccountDetails, 
-    updateUserAvatar, 
-    updateUserCoverImage ,
-    getHistory,
-    getUserChannelProfile,
     hello
 };

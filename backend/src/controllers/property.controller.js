@@ -1,6 +1,6 @@
-import asyncHandler from '../utils/asyncHandler';
-import ApiError from '../utils/ApiError.js';
-import ApiResponse from '../utils/ApiResponse.js';
+import {asyncHandler} from '../utils/asyncHandler';
+import {ApiError} from '../utils/ApiError.js';
+import {ApiResponse} from '../utils/ApiResponse.js';
 import { PropertyTax } from '../models/propertytax.model.js';
 
 // Create a new property tax entry

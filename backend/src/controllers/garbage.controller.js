@@ -1,6 +1,6 @@
-import asyncHandler from '../utils/asyncHandler';
-import ApiError from '../utils/ApiError.js';
-import ApiResponse from '../utils/ApiResponse.js';
+import {asyncHandler} from '../utils/asyncHandler';
+import {ApiError} from '../utils/ApiError.js';
+import {ApiResponse} from '../utils/ApiResponse.js';
 import { GarbageTax } from '../models/garbagetax.model.js';
 
 // Create a new garbage tax entry

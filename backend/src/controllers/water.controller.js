@@ -1,8 +1,8 @@
-import asyncHandler from '../utils/asyncHandler.js';
-import ApiError from '../utils/ApiError.js'; // Replace with your error utility
-import ApiResponse from '../utils/ApiResponse.js'; // Replace with your response utility
+import {asyncHandler} from '../utils/asyncHandler.js';
+import {ApiError} from '../utils/ApiError.js'; 
+import {ApiResponse} from '../utils/ApiResponse.js'; 
 import { WaterTax } from '../models/watertax.model.js';
-import uploadOnCloudinary from '../utils/cloudniray.js'; // Replace with your cloudinary utility
+
 
 // Create a new water tax entry
 const createWaterTax = asyncHandler(async (req, res) => {
