@@ -7,11 +7,6 @@ import {
     refreshAccessToken,
     passwordChange,
     getCurrentUser,
-    updateAccountDetails,
-    updateUserAvatar,
-    updateUserCoverImage,
-    getHistory,
-    getUserChannelProfile,
     hello
 } from "../controllers/user.controller.js";
 import { veriftyJWT } from "../middlewares/auth.middleware.js";
@@ -27,9 +22,6 @@ router.route("/logout").post(veriftyJWT, logoutUser)
 router.route("/refresh-token").post(refreshAccessToken)
 router.route("/change-password").post(veriftyJWT,passwordChange)
 router.route("/current-user").get(veriftyJWT,getCurrentUser)
-router.route("/update-account").patch(veriftyJWT,updateAccountDetails)
 
-router.route("/c/:username").get(veriftyJWT,getUserChannelProfile)
-router.route("/history").get(veriftyJWT,getHistory)
 
 export default router;

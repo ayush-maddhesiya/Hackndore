@@ -5,6 +5,8 @@ import {
   getPropertyTaxById,
   updatePropertyTax
 } from "../controllers/water.controller.js";
+import { veriftyJWT } from "../middlewares/auth.middleware.js";
+
 const router = Router();
 
 router.route("/getAllPropertyTaxes").get(getAllPropertyTaxes)
