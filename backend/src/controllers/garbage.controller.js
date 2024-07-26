@@ -1,7 +1,7 @@
-import asyncHandler from 'express-async-handler';
-import ApiError from './utils/ApiError';
-import ApiResponse from './utils/ApiResponse';
-import { GarbageTax } from './models/garbageTax';
+import asyncHandler from '../utils/asyncHandler';
+import ApiError from '../utils/ApiError.js';
+import ApiResponse from '../utils/ApiResponse.js';
+import { GarbageTax } from '../models/garbagetax.model.js';
 
 // Create a new garbage tax entry
 const createGarbageTax = asyncHandler(async (req, res) => {

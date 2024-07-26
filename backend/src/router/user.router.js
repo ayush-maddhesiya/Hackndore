@@ -17,18 +17,7 @@ import {
 import { veriftyJWT } from "../middlewares/auth.middleware.js";
 const router = Router();
 
-router.route("/register").post(
-    upload.fields([
-        {
-            name: "avatar",
-            maxCount: 1
-        },
-        {
-            name: "coverImage",
-            maxCount: 1
-        }
-    ])
-    ,registerUser)
+router.route("/register").post(registerUser)
 
 router.route("/login").post(loginUser)
 router.route("/hello").get(hello)
@@ -39,9 +28,6 @@ router.route("/refresh-token").post(refreshAccessToken)
 router.route("/change-password").post(veriftyJWT,passwordChange)
 router.route("/current-user").get(veriftyJWT,getCurrentUser)
 router.route("/update-account").patch(veriftyJWT,updateAccountDetails)
-
-router.route("/avatar").patch(veriftyJWT,upload.single("avatar"),updateUserAvatar)
-router.route("/cover-image").patch(veriftyJWT,upload.single("coverImage"),updateUserCoverImage)
 
 router.route("/c/:username").get(veriftyJWT,getUserChannelProfile)
 router.route("/history").get(veriftyJWT,getHistory)
