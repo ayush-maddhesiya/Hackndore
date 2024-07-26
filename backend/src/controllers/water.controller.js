@@ -1,7 +1,7 @@
-import asyncHandler from 'express-async-handler';
-import ApiError from './utils/ApiError'; // Replace with your error utility
-import ApiResponse from './utils/ApiResponse'; // Replace with your response utility
-import { WaterTax } from './models/waterTax';
+import asyncHandler from '../utils/asyncHandler.js';
+import ApiError from '../utils/ApiError.js'; // Replace with your error utility
+import ApiResponse from '../utils/ApiResponse'; // Replace with your response utility
+import { WaterTax } from '../models/waterTax';
 import uploadOnCloudinary from './utils/cloudinary'; // Replace with your cloudinary utility
 
 // Create a new water tax entry
