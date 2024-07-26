@@ -4,7 +4,7 @@ import Jwt from "jsonwebtoken"
 
 const userSchema = new Schema(
     {
-        username: {
+        aadhar: {
             type: String,
             required: true,
             unique: true,
@@ -12,6 +12,14 @@ const userSchema = new Schema(
             trim: true, 
             index: true
         },
+        pan: {
+          type: String,
+          required: true,
+          unique: true,
+          lowercase: true,
+          trim: true, 
+          index: true
+      },
         email: {
             type: String,
             required: true,
@@ -19,25 +27,27 @@ const userSchema = new Schema(
             lowecase: true,
             trim: true, 
         },
+      water_tax: {
+        type: Schema.Types.ObjectId,
+        ref: "WaterTax",
+        isPaid: Boolean,
+      },
+      garbage_tax: {
+        type: Schema.Types.ObjectId,
+        ref: "GarbageTax",
+        isPaid: Boolean,
+      },
+      property_tax: {
+        type: Schema.Types.ObjectId,
+        ref: "PropertyTax",
+        isPaid: Boolean,
+      },
         fullName: {
             type: String,
             required: true,
             trim: true, 
             index: true
         },
-        avatar: {
-            type: String, // cloudinary url
-            required: true,
-        },
-        coverImage: {
-            type: String, // cloudinary url
-        },
-        watchHistory: [
-            {
-                type: Schema.Types.ObjectId,
-                ref: "Video"
-            }
-        ],
         password: {
             type: String,
             required: [true, 'Password is required']
