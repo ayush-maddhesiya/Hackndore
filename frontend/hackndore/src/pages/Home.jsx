@@ -1,6 +1,6 @@
 // LoginVideoComponent.js
 import React from 'react';
-import BgVideo from '../assets/background.mp4';
+import BgVideo from '../assets/background3.mp4';
 import Footer from '../components/Footer';
 
 const Home = () => {
