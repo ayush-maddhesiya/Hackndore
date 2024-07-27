@@ -1,4 +1,4 @@
-import {asyncHandler} from '../utils/asyncHandler';
+import {asyncHandler} from '../utils/asyncHandler.js';
 import {ApiError} from '../utils/ApiError.js';
 import {ApiResponse} from '../utils/ApiResponse.js';
 import { PropertyTax } from '../models/propertytax.model.js';

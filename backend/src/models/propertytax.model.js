@@ -31,6 +31,10 @@ const propertyTaxSchema = new Schema({
     type: Number,
     required: true,
   },
+  isPaid:{
+    type: Boolean,
+    default: false
+  }
 }, {
   timestamps: true,
 });

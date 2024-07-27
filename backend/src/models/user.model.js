@@ -38,17 +38,17 @@ const userSchema = new Schema(
         water_tax: {
             type: Schema.Types.ObjectId,
             ref: "WaterTax",
-            isPaid: Boolean,
+            totalAmount: Number
         },
         garbage_tax: {
             type: Schema.Types.ObjectId,
             ref: "GarbageTax",
-            isPaid: Boolean,
+            totalAmount: Number
         },
         property_tax: {
             type: Schema.Types.ObjectId,
             ref: "PropertyTax",
-            isPaid: Boolean,
+            totalAmount: Number
         },
         fullName: {
             type: String,
