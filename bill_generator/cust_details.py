@@ -2,7 +2,6 @@ import pymongo
 import pymongo.mongo_client
 import pandas as pd
 from bill_gen import BillGenerators
-import pandas as pd
 
 class Get_data:
     @staticmethod
@@ -15,14 +14,14 @@ class Get_data:
             
             collection=db["payments"]
             a=collection.find_one({'billNumber':bill_no})
-            user=collection_user.find_one({'_id':a['user']})
+            #user=collection_user.find_one({'_id':a['user']})
             try:
                 if a['bill']=="propertytax":
-                    BillGenerators.property_bill(user['fullName'],a['_id'],a['billNumber'])
+                    BillGenerators.property_bill(a['_id'],a['billNumber'],a['amountPaid'])
                 elif a['bill']=="watertax":
-                    BillGenerators.water_bill(user['fullName'],a['_id'],a['billNumber'])
+                    BillGenerators.water_bill(a['_id'],a['billNumber'],a['amountPaid'])
                 elif a['bill']=="garbagetax":
-                    BillGenerators.garbage_bill(user['fullName'],a['_id'],a['billNumber'])
+                    BillGenerators.garbage_bill(a['_id'],a['billNumber'],a['amountPaid'])
       
             except:
                  print("Enter a valid bill number.")
