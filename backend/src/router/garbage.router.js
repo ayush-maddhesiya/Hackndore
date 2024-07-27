@@ -1,20 +1,22 @@
 import { Router } from "express";
-import {
+import { 
   createGarbageTax,
   getAllGarbageTaxes,
   getGarbageTaxById,
-  updateGarbageTax
-} from "../controllers/water.controller.js";
+  updateGarbageTax,
+  addBillInfo
+} from "../controllers/garbage.controller.js";
 import { veriftyJWT } from "../middlewares/auth.middleware.js";
 
 const router = Router();
 
-router.route("/getAllGarbageTaxes").get(getAllGarbageTaxes)
+router.route("/getAllGarbageTaxes").get(getAllGarbageTaxes);
 
-//secured routes
-router.route("/createGarbageTax").post(veriftyJWT, createGarbageTax)
-router.route("/getGarbageTaxById").get(veriftyJWT, getGarbageTaxById)
-router.route("/updateGarbageTax").get(veriftyJWT, updateGarbageTax)
-
+// Secured routes
+router.route("/createGarbageTax").post(veriftyJWT, createGarbageTax);
+router.route("/getGarbageTaxById").get(veriftyJWT, getGarbageTaxById);
+router.route("/updateGarbageTax").patch(veriftyJWT, updateGarbageTax);
+// Add data every month
+router.route("/addBillInfo").put(veriftyJWT, addBillInfo);
 
 export default router;

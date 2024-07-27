@@ -5,6 +5,7 @@ import { uploadOnCloudinary } from "../utils/cloudniray.js";
 // import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import Jwt from "jsonwebtoken";
+import sendWelcomeEmail from "./email.controlller.js";
 import mongoose from "mongoose";
 
 const hello = asyncHandler(async (req, res) =>{
@@ -63,7 +64,7 @@ const registerUser = asyncHandler(async (req, res) => {
     if (!createdUser) {
         throw new ApiError(500, "Something went wrong while registering the user")
     }
-
+    sendWelcomeEmail(email)
     return res.status(201).json(
         new ApiResponse(200, createdUser, "User regised Successfully")
     )
@@ -151,6 +152,44 @@ const logoutUser = asyncHandler(async (req, res) => {
 
 })
 
+const updateAddress = async (req, res) => {
+    try {
+      const { userId } = req.params;
+      const { wardNumber, houseNumber, pincode } = req.body;
+  
+      // Validate the pincode format
+      if (!/^[0-9]{6}$/.test(pincode)) {
+        return res.status(400).json({ message: "Invalid pincode format." });
+      }
+  
+      // Find the user and update the address
+      const user = await User.findById(userId).populate("address");
+  
+      if (!user) {
+        return res.status(404).json({ message: "User not found." });
+      }
+  
+      // Update address or create a new one if it doesn't exist
+      let address;
+      if (user.address) {
+        address = await Address.findByIdAndUpdate(
+          user.address._id,
+          { wardNumber, houseNumber, pincode },
+          { new: true }
+        );
+      } else {
+        address = new Address({ wardNumber, houseNumber, pincode });
+        await address.save();
+        user.address = address._id;
+        await user.save();
+      }
+  
+      res.status(200).json({ message: "Address updated successfully.", address });
+    } catch (error) {
+      res.status(500).json({ message: "Internal server error.", error });
+    }
+  };
+
 const refreshAccessToken = asyncHandler(async (req, res) => {
     try {
         const incommingAccessToken = res.cookies.accessToken || res.body.accessToken;
@@ -212,9 +251,11 @@ const passwordChange = asyncHandler(async (req, res) => {
 })
 
 const getCurrentUser = asyncHandler(async (req, res) => {
+    const  user  = req.user;
+    console.log(user);
     return res
         .status(200)
-        .json(200, req.user, "current user fetched successfully")
+        .json(new ApiResponse(200,{ user }, "current user fetched successfully"))
 })
 
 
@@ -228,5 +269,6 @@ export {
     getCurrentUser, 
     passwordChange, 
     refreshAccessToken,
-    hello
+    hello,
+    updateAddress
 };

@@ -1,3 +1,4 @@
+import mongoose, { Schema } from "mongoose";
 // Property Tax Schema
 const propertyTaxSchema = new Schema({
   billNo: {
@@ -30,6 +31,10 @@ const propertyTaxSchema = new Schema({
     type: Number,
     required: true,
   },
+  isPaid:{
+    type: Boolean,
+    default: false
+  }
 }, {
   timestamps: true,
 });

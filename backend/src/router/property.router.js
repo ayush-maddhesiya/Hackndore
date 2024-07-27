@@ -4,7 +4,7 @@ import {
   getAllPropertyTaxes,
   getPropertyTaxById,
   updatePropertyTax
-} from "../controllers/water.controller.js";
+} from "../controllers/property.controller.js";
 import { veriftyJWT } from "../middlewares/auth.middleware.js";
 
 const router = Router();

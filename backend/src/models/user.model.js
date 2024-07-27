@@ -38,23 +38,27 @@ const userSchema = new Schema(
         water_tax: {
             type: Schema.Types.ObjectId,
             ref: "WaterTax",
-            isPaid: Boolean,
+            totalAmount: Number
         },
         garbage_tax: {
             type: Schema.Types.ObjectId,
             ref: "GarbageTax",
-            isPaid: Boolean,
+            totalAmount: Number
         },
         property_tax: {
             type: Schema.Types.ObjectId,
             ref: "PropertyTax",
-            isPaid: Boolean,
+            totalAmount: Number
         },
         fullName: {
             type: String,
             required: true,
             trim: true,
             index: true
+        },
+        address:{
+            type:Schema.Types.ObjectId,
+            ref:"Address",
         },
         password: {
             type: String,
@@ -87,7 +91,7 @@ userSchema.methods.generateAccessToken = function () {
         email: this.email,
         username: this.username,
         fullName: this.fullName,
-    },
+    },~
         process.env.ACCESS_TOKEN_SECRET,
         {
             expiresIn: process.env.ACCESS_TOKEN_EXPIRY

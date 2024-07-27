@@ -1,19 +1,31 @@
+import mongoose, { Schema } from "mongoose";
 
 // Garbage Tax Schema
 const garbageTaxSchema = new Schema({
-  billNumber: {
-    type: String,
-    required: true,
-    unique: true,
-  },
-  amount: {
-    type: Number,
+  user: {
+    type: Schema.Types.ObjectId,
+    ref: 'User',
     required: true,
   },
-  lastDate: {
-    type: Date,
-    required: true,
-  },
+  billinfo: [{
+    billNumber: {
+      type: String,
+      required: true,
+      unique: true,
+    },
+    month: {
+      type: String,
+      required: true
+    },
+    isPaid:{
+      type: Boolean,
+      default: false
+    },
+    amount: {
+      type: Number,
+      required: true,
+    },
+  }],
 }, {
   timestamps: true,
 });
