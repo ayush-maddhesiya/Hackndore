@@ -9,7 +9,7 @@ class Get_data:
     def selectdata(bill_no):
        
             client=pymongo.MongoClient( "mongodb+srv://ayush:ayush123@cluster0.9h4qgcg.mongodb.net/")
-            print(client)
+           
             db=client["Revenue_Collection"]
             collection_user=db['users']
             
