@@ -4,12 +4,13 @@ import BgVideo from "../assets/background3.mp4";
 import Footer from "../components/Footer";
 import Login from "./Login";
 import Signup  from "./Signup";
+import Navbar from '../components/Navbar'
 import Adminsignup from "./Adminsignup";
 
 const Home = () => {
     const [login, setLogin] = useState(1);
   return (
-    <>
+    <> <Navbar/>
       <div className="h-screen w-full relative">
         {/* Background Video */}
         <video
