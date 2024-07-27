@@ -13,7 +13,7 @@ router.route("/getAllPaidPayments").get( getAllPaidPayments)
 router.route("/getTotalPaidAmount").get( getTotalPaidAmount)
 
 //secured routes
-router.route("/createPayment").post(veriftyJWT, createPayment)
+router.route("/createPayment").post(  createPayment)
 
 
 export default router;

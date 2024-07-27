@@ -13,10 +13,10 @@ const router = Router();
 router.route("/getAllGarbageTaxes").get(getAllGarbageTaxes);
 
 // Secured routes
-router.route("/createGarbageTax").post(veriftyJWT, createGarbageTax);
-router.route("/getGarbageTaxById").get(veriftyJWT, getGarbageTaxById);
-router.route("/updateGarbageTax").patch(veriftyJWT, updateGarbageTax);
+router.route("/createGarbageTax").post(  createGarbageTax);
+router.route("/getGarbageTaxById").get(  getGarbageTaxById);
+router.route("/updateGarbageTax").patch(  updateGarbageTax);
 // Add data every month
-router.route("/addBillInfo").put(veriftyJWT, addBillInfo);
+router.route("/addBillInfo").put(  addBillInfo);
 
 export default router;
