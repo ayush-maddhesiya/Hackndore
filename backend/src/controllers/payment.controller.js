@@ -46,8 +46,25 @@ const getAllPaidPayments = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, paidPayments, "Paid payments retrieved successfully"));
 });
 
+// Get total paid amount for each bill type
+const getTotalPaidAmount = asyncHandler(async (req, res) => {
+  const totalPaid = await Payment.aggregate([
+    {
+      $group: {
+        _id: "$bill",
+        totalAmount: { $sum: "$amountPaid" }
+      }
+    }
+  ]);
+
+  return res
+    .status(200)
+    .json(new ApiResponse(200, totalPaid, "Total paid amounts retrieved successfully"));
+})
+
 export {
   createPayment,
   getAllPendingPayments,
-  getAllPaidPayments
+  getAllPaidPayments,
+  getTotalPaidAmount
 };

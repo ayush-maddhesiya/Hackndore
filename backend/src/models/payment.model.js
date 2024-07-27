@@ -1,5 +1,4 @@
 import mongoose, { Schema } from "mongoose";
-import { PropertyTax } from "./propertytax.model";
 const paymentSchema = new Schema({
   user: {
     type: Schema.Types.ObjectId,
