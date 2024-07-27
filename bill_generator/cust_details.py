@@ -16,14 +16,16 @@ class Get_data:
             collection=db["payments"]
             a=collection.find_one({'billNumber':bill_no})
             user=collection_user.find_one({'_id':a['user']})
-            if a['bill']=="propertytax":
-                  BillGenerators.property_bill(user['fullName'],a['_id'],a['billNumber'])
-            elif a['bill']=="watertax":
-                  BillGenerators.water_bill(user['fullName'],a['_id'],a['billNumber'])
-            elif a['bill']=="garbagetax":
-                  BillGenerators.garbage_bill(user['fullName'],a['_id'],a['billNumber'])
+            try:
+                if a['bill']=="propertytax":
+                    BillGenerators.property_bill(user['fullName'],a['_id'],a['billNumber'])
+                elif a['bill']=="watertax":
+                    BillGenerators.water_bill(user['fullName'],a['_id'],a['billNumber'])
+                elif a['bill']=="garbagetax":
+                    BillGenerators.garbage_bill(user['fullName'],a['_id'],a['billNumber'])
       
-      
+            except:
+                 print("Enter a valid bill number.")
 
             
 
