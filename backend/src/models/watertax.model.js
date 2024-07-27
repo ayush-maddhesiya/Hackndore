@@ -2,23 +2,34 @@ import mongoose, { Schema } from "mongoose";
 
 // Water Tax Schema
 const waterTaxSchema = new Schema({
-  billNumber: {
-    type: String,
-    required: true,
-    unique: true,
-  },
-  amount: {
-    type: Number,
+  user: {
+    type: Schema.Types.ObjectId,
+    ref: 'User',
     required: true,
   },
-  lastDate: {
-    type: Date,
-    required: true,
-  },
-  unitUsed: {
-    type: Number,
-    required: true,
-  },
+  billinfo: [{
+    billNumber: {
+      type: String,
+      required: true,
+      unique: true,
+    },
+    month: {
+      type: String,
+      required: true
+    },
+    amount: {
+      type: Number,
+      required: true,
+    },
+    Date: {
+      type: Date,
+      required: true,
+    },
+    unitUsed: {
+      type: Number,
+      required: true,
+    }
+  },],
 }, {
   timestamps: true,
 });

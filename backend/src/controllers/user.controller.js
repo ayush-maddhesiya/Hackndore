@@ -212,9 +212,11 @@ const passwordChange = asyncHandler(async (req, res) => {
 })
 
 const getCurrentUser = asyncHandler(async (req, res) => {
+    const  user  = req.user;
+    console.log(user);
     return res
         .status(200)
-        .json(200, req.user, "current user fetched successfully")
+        .json(new ApiResponse(200,{ user }, "current user fetched successfully"))
 })
 
 
