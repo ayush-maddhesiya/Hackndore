@@ -1,8 +1,9 @@
 import axios from "axios";
-
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function Login() {
+    const navigate = useNavigate();
   
   const [formData, setFormData] = useState({
     pan: "",
@@ -18,15 +19,27 @@ function Login() {
   };
 
   const clickhandler = () => {
-    console.log(formData);
     axios.post("http://localhost:3000/api/v1/users/login", formData)
       .then((response) => {
-        console.log(response.data);
-        // Redirect or perform other actions based on the response
-        ; // Example: navigate to a success page
+        if (response.data.statusCode === 200) {
+          // Store tokens in localStorage or a secure storage method
+          localStorage.setItem('accessToken', response.data.data.accessToken);
+          localStorage.setItem('refreshToken', response.data.data.refreshToken);
+          
+          // Store user data if needed
+          localStorage.setItem('userData', JSON.stringify(response.data.data.user));
+  
+          console.log("Login successful, navigating to /user");
+          navigate("/user");
+        } else {
+          console.log("Unexpected response:", response.data);
+        }
       })
       .catch((error) => {
         console.error("There was an error!", error);
+        if (error.response) {
+          console.log("Error data:", error.response.data);
+        }
       });
   };
 

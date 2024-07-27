@@ -1,6 +1,9 @@
 import React from "react";
 import Navbar2 from "../components/Navbar2";
 import avatar from "../assets/avatar.jpg";
+import WaterBillCard from "../components/WaterBillCard";
+const billAmount = '50.00';
+const dueDate = '2024-08-15';
 
 function User() {
   return (
@@ -28,7 +31,9 @@ function User() {
                  <div className="h-24 w-40 text-center flex justify-center items-center rounded-xl   bg-blue-300">garbage</div>
                  </div>
 
-                <div className=" w-full mx-2 h-64 bg-black"></div>
+                 <div className="flex justify-center items-center min-h-screen bg-blue-100">
+      <WaterBillCard billAmount={billAmount} dueDate={dueDate} />
+    </div>
 
           </div>
           <div></div>
