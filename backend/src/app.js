@@ -18,10 +18,14 @@ app.use(cookieParser())
 import userRoute from "./router/user.router.js"
 import waterRoute from "./router/water.router.js"
 import garbageRoute from "./router/garbage.router.js"
+import propertyRoute from "./router/property.router.js"
+import paymentRoute from "./router/payment.router.js"
 
 //router declartion:
 app.use("/api/v1/users",userRoute)
 app.use("/api/v1/water", waterRoute)
 app.use("/api/v1/garbage",garbageRoute)
+app.use("/api/v1/property",propertyRoute)
+app.use("/api/v1/payment",paymentRoute)
 
 export default app;

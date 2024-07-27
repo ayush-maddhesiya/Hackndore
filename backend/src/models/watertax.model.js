@@ -25,6 +25,10 @@ const waterTaxSchema = new Schema({
       type: Date,
       required: true,
     },
+    isPaid:{
+      type: Boolean,
+      default: false
+    },
     unitUsed: {
       type: Number,
       required: true,

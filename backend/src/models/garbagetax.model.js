@@ -17,6 +17,10 @@ const garbageTaxSchema = new Schema({
       type: String,
       required: true
     },
+    isPaid:{
+      type: Boolean,
+      default: false
+    },
     amount: {
       type: Number,
       required: true,
