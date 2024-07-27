@@ -5,6 +5,8 @@ import {
   getGarbageTaxById,
   updateGarbageTax
 } from "../controllers/water.controller.js";
+import { veriftyJWT } from "../middlewares/auth.middleware.js";
+
 const router = Router();
 
 router.route("/getAllGarbageTaxes").get(getAllGarbageTaxes)
