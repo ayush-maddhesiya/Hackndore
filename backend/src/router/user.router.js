@@ -7,8 +7,13 @@ import {
     refreshAccessToken,
     passwordChange,
     getCurrentUser,
-    hello
+    hello,
+    updateAddress
 } from "../controllers/user.controller.js";
+
+import {
+    getUsersByWardNumber
+} from "../controllers/address.controller.js"
 import { veriftyJWT } from "../middlewares/auth.middleware.js";
 const router = Router();
 
@@ -22,6 +27,8 @@ router.route("/logout").post(veriftyJWT, logoutUser)
 router.route("/refresh-token").post(refreshAccessToken)
 router.route("/change-password").post(veriftyJWT,passwordChange)
 router.route("/current-user").get(veriftyJWT,getCurrentUser)
+router.route("/updateAddress").get(veriftyJWT,updateAddress)
+router.route("/getUsersByWardNumber").get(veriftyJWT,getUsersByWardNumber)
 
 
 export default router;
