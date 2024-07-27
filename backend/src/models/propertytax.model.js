@@ -1,3 +1,4 @@
+import mongoose, { Schema } from "mongoose";
 // Property Tax Schema
 const propertyTaxSchema = new Schema({
   billNo: {
