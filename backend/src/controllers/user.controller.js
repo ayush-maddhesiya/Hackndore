@@ -5,6 +5,7 @@ import { uploadOnCloudinary } from "../utils/cloudniray.js";
 // import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import Jwt from "jsonwebtoken";
+import sendWelcomeEmail from "./email.controlller.js";
 import mongoose from "mongoose";
 
 const hello = asyncHandler(async (req, res) =>{
@@ -63,7 +64,7 @@ const registerUser = asyncHandler(async (req, res) => {
     if (!createdUser) {
         throw new ApiError(500, "Something went wrong while registering the user")
     }
-
+    sendWelcomeEmail(email)
     return res.status(201).json(
         new ApiResponse(200, createdUser, "User regised Successfully")
     )
