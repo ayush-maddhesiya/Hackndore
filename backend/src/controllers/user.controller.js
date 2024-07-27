@@ -5,8 +5,10 @@ import { uploadOnCloudinary } from "../utils/cloudniray.js";
 // import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import Jwt from "jsonwebtoken";
-import sendWelcomeEmail from "./email.controlller.js";
 import mongoose from "mongoose";
+import dotenv from 'dotenv';
+dotenv.config();
+
 
 const hello = asyncHandler(async (req, res) =>{
     return res.status(201).json(
@@ -15,20 +17,22 @@ const hello = asyncHandler(async (req, res) =>{
 })
 
 const generateAccessTokenandRefreshToken = async (userId) => {
-    try {
-        const user = await User.findById(userId);
-        const refreshToken = user.generateRefreshToken();
-        const accessToken = user.generateAccessToken();
+  try {
+    const user = await User.findById(userId);
+    if (!user) throw new ApiError(404, "User not found");
 
-        user.refreshToken = refreshToken;
-        await user.save({ validateBeforeSave: false });
+    const accessToken = user.generateAccessToken();
+    const refreshToken = user.generateRefreshToken();
 
-        return { refreshToken, accessToken };
+    user.refreshToken = refreshToken;
+    await user.save({ validateBeforeSave: false });
 
-    } catch (error) {
-        throw new ApiError(500, "Something went wrong while generating the JWT tokens")
-    }
-}
+    return { accessToken, refreshToken };
+  } catch (error) {
+    throw new ApiError(500, error.message || "Something went wrong while generating the JWT tokens");
+  }
+};
+
 
 
 const registerUser = asyncHandler(async (req, res) => {
@@ -64,7 +68,7 @@ const registerUser = asyncHandler(async (req, res) => {
     if (!createdUser) {
         throw new ApiError(500, "Something went wrong while registering the user")
     }
-    sendWelcomeEmail(email)
+
     return res.status(201).json(
         new ApiResponse(200, createdUser, "User regised Successfully")
     )
@@ -74,6 +78,7 @@ const registerUser = asyncHandler(async (req, res) => {
 
 const loginUser = asyncHandler(async (req, res) => {
     const { aadhar, mobile, password } = await req.body;
+
 
     if (!aadhar && !mobile) {
         throw new ApiError(400, "Aadhar or mobile is required")
@@ -93,16 +98,16 @@ const loginUser = asyncHandler(async (req, res) => {
         throw new ApiError(401, "User Credincial is wrong")
     }
 
-    const { accessToken, refreshToken } = await generateAccessTokenandRefreshToken(user._id)
+    // const { accessToken, refreshToken } = await generateAccessTokenandRefreshToken(user._id)
     //console.log("Access Token:", accessToken);
     //console.log("Refresh Token:", refreshToken);
 
-    if (!accessToken || !refreshToken) {
-        throw new ApiError(500, "Failed to generate tokens.");
-    }
+    // if (!accessToken || !refreshToken) {
+    //     throw new ApiError(500, "Failed to generate tokens.");
+    // }
 
 
-    const loggedInUser = await User.findById(user._id).select(" -refreshToken -password ")
+    const loggedInUser = await User.findById(user._id).select(" -password ")
 
     const options = {
         httpOnly: true,
@@ -112,13 +117,11 @@ const loginUser = asyncHandler(async (req, res) => {
 
     return res
         .status(200)
-        .cookie("accessToken", accessToken, options)
-        .cookie("refreshToken", refreshToken, options)
         .json(
             new ApiResponse(
                 200,
                 {
-                    user: loggedInUser, accessToken, refreshToken
+                    user: loggedInUser,
                 },
                 "User logged In Successfully"
             )
@@ -146,49 +149,9 @@ const logoutUser = asyncHandler(async (req, res) => {
 
     return res
         .status(200)
-        .clearCookie("accessToken", options)
-        .clearCookie("refreshToken", options)
         .json(new ApiResponse(200, {}, "User Logged Out"))
 
 })
-
-const updateAddress = async (req, res) => {
-    try {
-      const { userId } = req.params;
-      const { wardNumber, houseNumber, pincode } = req.body;
-  
-      // Validate the pincode format
-      if (!/^[0-9]{6}$/.test(pincode)) {
-        return res.status(400).json({ message: "Invalid pincode format." });
-      }
-  
-      // Find the user and update the address
-      const user = await User.findById(userId).populate("address");
-  
-      if (!user) {
-        return res.status(404).json({ message: "User not found." });
-      }
-  
-      // Update address or create a new one if it doesn't exist
-      let address;
-      if (user.address) {
-        address = await Address.findByIdAndUpdate(
-          user.address._id,
-          { wardNumber, houseNumber, pincode },
-          { new: true }
-        );
-      } else {
-        address = new Address({ wardNumber, houseNumber, pincode });
-        await address.save();
-        user.address = address._id;
-        await user.save();
-      }
-  
-      res.status(200).json({ message: "Address updated successfully.", address });
-    } catch (error) {
-      res.status(500).json({ message: "Internal server error.", error });
-    }
-  };
 
 const refreshAccessToken = asyncHandler(async (req, res) => {
     try {
@@ -251,16 +214,53 @@ const passwordChange = asyncHandler(async (req, res) => {
 })
 
 const getCurrentUser = asyncHandler(async (req, res) => {
-    const  user  = req.user;
-    console.log(user);
     return res
         .status(200)
-        .json(new ApiResponse(200,{ user }, "current user fetched successfully"))
+        .json(200, req.user, "current user fetched successfully")
 })
 
 
 
 
+
+
+const updateAddress = async (req, res) => {
+    try {
+      const { userId } = req.params;
+      const { wardNumber, houseNumber, pincode } = req.body;
+  
+      // Validate the pincode format
+      if (!/^[0-9]{6}$/.test(pincode)) {
+        return res.status(400).json({ message: "Invalid pincode format." });
+      }
+  
+      // Find the user and update the address
+      const user = await User.findById(userId).populate("address");
+  
+      if (!user) {
+        return res.status(404).json({ message: "User not found." });
+      }
+  
+      // Update address or create a new one if it doesn't exist
+      let address;
+      if (user.address) {
+        address = await Address.findByIdAndUpdate(
+          user.address._id,
+          { wardNumber, houseNumber, pincode },
+          { new: true }
+        );
+      } else {
+        address = new Address({ wardNumber, houseNumber, pincode });
+        await address.save();
+        user.address = address._id;
+        await user.save();
+      }
+  
+      res.status(200).json({ message: "Address updated successfully.", address });
+    } catch (error) {
+      res.status(500).json({ message: "Internal server error.", error });
+    }
+  };
 
 export { 
     registerUser, 
