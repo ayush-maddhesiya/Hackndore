@@ -2,13 +2,13 @@ import { asyncHandler } from "../utils/asyncHandler.js";
 import { ApiError } from "../utils/ApiError.js";
 import { User } from "../models/user.model.js";
 import { uploadOnCloudinary } from "../utils/cloudniray.js";
-// import { ApiError } from "../utils/ApiError.js";
+// import { ApiError } from "../utils/ApiError.js";`
 import { ApiResponse } from "../utils/ApiResponse.js";
 import Jwt from "jsonwebtoken";
 import mongoose from "mongoose";
 import dotenv from 'dotenv';
 dotenv.config();
-
+import Address from "../models/address.model.js"
 
 const hello = asyncHandler(async (req, res) =>{
     return res.status(201).json(
@@ -226,7 +226,8 @@ const getCurrentUser = asyncHandler(async (req, res) => {
 
 const updateAddress = async (req, res) => {
     try {
-      const { userId } = req.params;
+      const { userId } = req.query;
+      console.log(userId);
       const { wardNumber, houseNumber, pincode } = req.body;
   
       // Validate the pincode format
@@ -258,7 +259,7 @@ const updateAddress = async (req, res) => {
   
       res.status(200).json({ message: "Address updated successfully.", address });
     } catch (error) {
-      res.status(500).json({ message: "Internal server error.", error });
+      res.status(500).json({ message: error.message || "Internal server error.", error });
     }
   };
 
