@@ -101,7 +101,8 @@ function User() {
 
   const payNowHandler = (billId) => {
     console.log(`Pay Now clicked for bill ID: ${billId}`);
-    setPaymentButtonId(billId); // Example: You might set this to a specific ID from your bill data.
+    setPaymentButtonId(billId);
+    window.location.href = "https://razorpay.me/@employme?amount=EPec5evqGoRk2C8icWNJlQ%3D%3D";
   };
 
   const scrollToChatbot = () => {
@@ -182,19 +183,12 @@ function User() {
                       <td className="py-2 px-4 border-b">{bill.isPaid ? 'Yes' : 'No'}</td>
                       <td className="py-2 px-4 border-b">
                         {!bill.isPaid && (
-                          <div>
-                            <button
-                              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded mb-2"
-                              onClick={() => payNowHandler(bill._id)}
-                            >
-                              Pay Now
-                            </button>
-                            {paymentButtonId === bill._id && (
-                              <form>
-                                <script src="https://checkout.razorpay.com/v1/payment-button.js" data-payment_button_id="pl_OdY2Fd6IKKS4KY" async></script>
-                              </form>
-                            )}
-                          </div>
+                          <button
+                            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded"
+                            onClick={() => payNowHandler(bill._id)}
+                          >
+                            Pay Now
+                          </button>
                         )}
                       </td>
                     </tr>
@@ -231,19 +225,12 @@ function User() {
                       <td className="py-2 px-4 border-b">{bill.isPaid ? 'Yes' : 'No'}</td>
                       <td className="py-2 px-4 border-b">
                         {!bill.isPaid && (
-                          <div>
-                            <button
-                              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded mb-2"
-                              onClick={() => payNowHandler(bill._id)}
-                            >
-                              Pay Now
-                            </button>
-                            {paymentButtonId === bill._id && (
-                              <form>
-                                <script src="https://checkout.razorpay.com/v1/payment-button.js" data-payment_button_id="pl_OdY2Fd6IKKS4KY" async></script>
-                              </form>
-                            )}
-                          </div>
+                          <button
+                            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded"
+                            onClick={() => payNowHandler(bill._id)}
+                          >
+                            Pay Now
+                          </button>
                         )}
                       </td>
                     </tr>
@@ -287,19 +274,12 @@ function User() {
                     <td className="py-2 px-4 border-b">{propertyData.isPaid ? 'Yes' : 'No'}</td>
                     <td className="py-2 px-4 border-b">
                       {!propertyData.isPaid && (
-                        <div>
-                          <button
-                            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded mb-2"
-                            onClick={() => payNowHandler(propertyData._id)}
-                          >
-                            Pay Now
-                          </button>
-                          {paymentButtonId === propertyData._id && (
-                            <form>
-                              <script src="https://checkout.razorpay.com/v1/payment-button.js" data-payment_button_id="pl_OdY2Fd6IKKS4KY" async></script>
-                            </form>
-                          )}
-                        </div>
+                        <button
+                          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded"
+                          onClick={() => payNowHandler(propertyData._id)}
+                        >
+                          Pay Now
+                        </button>
                       )}
                     </td>
                   </tr>
