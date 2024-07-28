@@ -20,9 +20,9 @@ const getAllPropertyTaxes = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, propertyTaxes, "Property tax entries retrieved successfully"));
 });
 
-// Read a specific property tax entry by ID
+// Read a specific property tax entry by ID 
 const getPropertyTaxById = asyncHandler(async (req, res) => {
-  const propertyTax = await PropertyTax.findById(req.params.id);
+  const propertyTax = await PropertyTax.findById(req.query.id);
   if (!propertyTax) {
     throw new ApiError(404, "Property tax entry not found");
   }

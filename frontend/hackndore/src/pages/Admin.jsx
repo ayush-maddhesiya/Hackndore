@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
+import axios from "axios";
 import Navbar2 from "../components/Navbar2";
 import Stack from "@mui/material/Stack";
 import { Gauge } from "@mui/x-charts/Gauge";
@@ -16,84 +17,103 @@ const size = {
 };
 
 function Admin() {
+  const [ward, setWard] = useState("");
+  const [wardDetails, setWardDetails] = useState(null);
+
+  const fetchWardDetails = async () => {
+    try {
+      const response = await axios.get(`/api/wards/${ward}`);
+      setWardDetails(response.data);
+    } catch (error) {
+      console.error("Error fetching ward details:", error);
+    }
+  };
+
   return (
     <>
       <Navbar2 />
-      <div className="out-container w-11/12 mx-auto ">
-        <div className="flex py-20">
-          <div className="w-4/5 flex flex-col   mx-auto ">
-            <div className="flex justify-center items-center gap-2 ">
-              <label htmlFor="ward"> WARD NO</label>
+      <div className="out-container w-11/12 mx-auto">
+        <div className="flex flex-col py-10">
+          <div className="w-full flex flex-col items-center mx-auto">
+            <div className="flex justify-center items-center gap-4 py-5">
+              <label htmlFor="ward" className="text-lg font-semibold">Ward No</label>
               <input
                 type="text"
                 name="ward"
-                placeholder="select ward "
+                placeholder="Enter ward number"
                 id="ward"
-                className="bg-blue-300/30"
+                value={ward}
+                onChange={(e) => setWard(e.target.value)}
+                className="bg-blue-300/30 p-2 rounded-md"
               />
-              <button className="bg-blue-600 rounded-lg text-white w-10">
-                {" "}
-                go
+              <button
+                onClick={fetchWardDetails}
+                className="bg-blue-600 rounded-lg text-white px-4 py-2"
+              >
+                Go
               </button>
             </div>
+            
+            {wardDetails && (
+              <div className="flex flex-col items-center py-10">
+                <h2 className="text-2xl font-bold mb-4">Ward Details</h2>
+                <p>Population: {wardDetails.population}</p>
+                <p>Area: {wardDetails.area} sq km</p>
+                <p>Major Landmarks: {wardDetails.landmarks.join(", ")}</p>
+              </div>
+            )}
 
-            <div className="flex flex-wrap py-20">
+            <div className="flex flex-wrap justify-center gap-10 py-10">
               <div className="flex flex-col justify-center items-center w-40 h-40">
-                <div>
-                  <Stack
-                    direction={{ xs: "column", md: "row" }}
-                    spacing={{ xs: 1, md: 3 }}
-                  >
-                    <Gauge
-                      width={200}
-                      height={150}
-                      value={40}
-                      valueMin={0}
-                      valueMax={60}
-                    />
-                  </Stack>
-                </div>
-                <h1>people paying water tax </h1>
+                <Stack
+                  direction={{ xs: "column", md: "row" }}
+                  spacing={{ xs: 1, md: 3 }}
+                >
+                  <Gauge
+                    width={200}
+                    height={150}
+                    value={40}
+                    valueMin={0}
+                    valueMax={60}
+                  />
+                </Stack>
+                <h1 className="text-center mt-2">Water Tax Payers</h1>
               </div>
 
               <div className="flex flex-col justify-center items-center w-40 h-40">
-                <div>
-                  <Stack
-                    direction={{ xs: "column", md: "row" }}
-                    spacing={{ xs: 1, md: 3 }}
-                  >
-                    <Gauge
-                      width={100}
-                      height={100}
-                      value={50}
-                      valueMin={10}
-                      valueMax={60}
-                    />
-                  </Stack>
-                </div>
-                <h1>people paying water tax </h1>
+                <Stack
+                  direction={{ xs: "column", md: "row" }}
+                  spacing={{ xs: 1, md: 3 }}
+                >
+                  <Gauge
+                    width={200}
+                    height={150}
+                    value={50}
+                    valueMin={10}
+                    valueMax={60}
+                  />
+                </Stack>
+                <h1 className="text-center mt-2">Property Tax Payers</h1>
               </div>
 
               <div className="flex flex-col justify-center items-center w-40 h-40">
-                <div>
-                  <Stack
-                    direction={{ xs: "column", md: "row" }}
-                    spacing={{ xs: 1, md: 3 }}
-                  >
-                    <Gauge
-                      width={100}
-                      height={100}
-                      value={50}
-                      valueMin={10}
-                      valueMax={60}
-                    />
-                  </Stack>
-                </div>
-                <h1>people paying water tax </h1>
+                <Stack
+                  direction={{ xs: "column", md: "row" }}
+                  spacing={{ xs: 1, md: 3 }}
+                >
+                  <Gauge
+                    width={200}
+                    height={100}
+                    value={50}
+                    valueMin={10}
+                    valueMax={60}
+                  />
+                </Stack>
+                <h1 className="text-center mt-2">Electricity Tax Payers</h1>
               </div>
             </div>
           </div>
-          <div className="py-20">
+          <div className="py-10 mx-auto">
             <PieChart
               series={[
                 {
