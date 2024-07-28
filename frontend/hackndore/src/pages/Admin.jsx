@@ -103,7 +103,7 @@ function Admin() {
                 >
                   <Gauge
                     width={200}
-                    height={100}
+                    height={150}
                     value={50}
                     valueMin={10}
                     valueMax={60}
