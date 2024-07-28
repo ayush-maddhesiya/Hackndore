@@ -23,14 +23,14 @@ function Login() {
       .then((response) => {
         if (response.data.statusCode === 200) {
           // Store tokens in localStorage or a secure storage method
-          localStorage.setItem('accessToken', response.data.data.accessToken);
-          localStorage.setItem('refreshToken', response.data.data.refreshToken);
+        //   localStorage.setItem('accessToken', response.data.data.accessToken);
+        //   localStorage.setItem('refreshToken', response.data.data.refreshToken);
           
           // Store user data if needed
-          localStorage.setItem('userData', JSON.stringify(response.data.data.user));
+        //   localStorage.setItem('userData', JSON.stringify(response.data.data.user));
   
-          console.log("Login successful, navigating to /user");
-          navigate("/user");
+        //   console.log("Login successful, navigating to /user");
+          navigate("/user", { state: { userData: response.data } });
         } else {
           console.log("Unexpected response:", response.data);
         }

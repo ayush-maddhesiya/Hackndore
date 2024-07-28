@@ -73,3 +73,9 @@
   font-weight: 900;
   font-style: italic;
 }
+
+.example::-webkit-scrollbar {
+  display: none;}
+  .example{
+    overflow-y: scroll;
+  }
